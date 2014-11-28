@@ -1,0 +1,329 @@
+{:Scene("/main.mheg+" 0)
+:Items (
+	// main nav chrome
+	{:OStringVar constChooseAnOption :OrigValue "Choose an option" }
+	{:IntegerVar intSelectedPos :OrigValue 0 }
+	
+	{:Rectangle boxBorder
+		:OrigBoxSize 200 200
+		:OrigPosition 45 45
+		:OrigRefFillColour '=7F=7F=7F=00'
+	}
+	{:EntryField txtTitle
+		:OrigContent "Training Day 01"
+		:OrigBoxSize 190 45
+		:OrigPosition 50 50
+		:HJustification centre
+		:VJustification centre
+		:InputType numeric
+	}
+	{:Rectangle boxSelected
+		:OrigBoxSize 44 44
+		:OrigPosition 48 98
+		:OrigLineWidth 2
+		:OrigRefLineColour '=FF=FF=FF=00'
+		:OrigRefFillColour '=00=00=00=FF'
+		:InitiallyActive false
+	}
+	{:Rectangle boxRed
+		:OrigBoxSize 40 40
+		:OrigPosition 50 100
+		:OrigLineWidth 4
+		:OrigRefLineColour '=7F=00=00=00'
+		:OrigRefFillColour '=BF=00=00=00'
+	}
+	{:Rectangle boxGreen
+		:OrigBoxSize 40 40
+		:OrigPosition 100 100
+		:OrigLineWidth 4
+		:OrigRefLineColour '=00=7F=00=00'
+		:OrigRefFillColour '=00=BF=00=00'
+	}
+	{:Rectangle boxYellow
+		:OrigBoxSize 40 40
+		:OrigPosition 150 100
+		:OrigLineWidth 4
+		:OrigRefLineColour '=7F=7F=00=00'
+		:OrigRefFillColour '=BF=BF=00=00'
+	}
+	{:Rectangle boxBlue
+		:OrigBoxSize 40 40
+		:OrigPosition 200 100
+		:OrigLineWidth 4
+		:OrigRefLineColour '=00=00=7F=00'
+		:OrigRefFillColour '=00=3F=FF=00'
+	}
+	{:Text txtOptions
+		:OrigContent "Press Left or Right, or Up and Down"
+		:OrigBoxSize 190 95
+		:OrigPosition 50 145
+		:HJustification centre
+		:VJustification start
+		:TextWrapping true
+	}
+	{:Rectangle boxImageBorder
+		:OrigBoxSize 260 260
+		:OrigPosition 255 45
+		:OrigRefFillColour '=7F=7F=7F=00'
+	}
+	{:Bitmap pngDefaultImage
+		:CHook 4
+		:OrigContent :ContentRef ("/img/default.png")
+		:OrigBoxSize 250 250
+		:OrigPosition 260 50
+	}
+	
+	{:Link linkPressRed
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		100
+		:LinkEffect (
+			intSelectedPos.SetVariable(1)
+			linkUpdateNav.Activate()
+		)
+	}
+	{:Link linkPressGreen
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		101
+		:LinkEffect (
+			intSelectedPos.SetVariable(2)
+			linkUpdateNav.Activate()
+		)
+	}
+	{:Link linkPressYellow
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		102
+		:LinkEffect (
+			intSelectedPos.SetVariable(3)
+			linkUpdateNav.Activate()
+		)
+	}
+	{:Link linkPressBlue
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		103
+		:LinkEffect (
+			intSelectedPos.SetVariable(4)
+			linkUpdateNav.Activate()
+		)
+	}
+	{:Link linkLeftPress
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		3
+		:LinkEffect (
+			intSelectedPos.Subtract(1)
+			:If (intSelectedPos <= 0) {
+				intSelectedPos.SetVariable(4)
+			}
+			
+			linkUpdateNav.Activate();
+		)
+	}
+	{:Link linkRightPress
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		4
+		:LinkEffect (
+			intSelectedPos.Add(1)
+			:If (intSelectedPos > 4) {
+				intSelectedPos.SetVariable(1)
+			}
+			
+			linkUpdateNav.Activate();
+		)
+	}
+	{:Link linkUpdateNav
+		:InitiallyActive	false
+		:EventType			IsRunning
+		:EventSource		linkUpdateNav
+		:LinkEffect (
+			linkUpdateNav.Deactivate()
+			
+			:If (intSelectedPos == 0) {
+				boxSelected.Stop();
+			}
+			:If (intSelectedPos == 1) {
+				txtOptions.SetData("Press Select to choose Redness")
+				pngDefaultImage.SetData(:NewRefContent("/img/red.png"))
+				boxSelected.Run();
+				boxSelected.SetPosition(48 98)
+			}
+			:If (intSelectedPos == 2) {
+				txtOptions.SetData("Press Select to choose Greeness")
+				pngDefaultImage.SetData(:NewRefContent("/img/green.png"))
+				boxSelected.Run();
+				boxSelected.SetPosition(98 98)
+			}
+			:If (intSelectedPos == 3) {
+				txtOptions.SetData("Press Select to choose Yellowness")
+				pngDefaultImage.SetData(:NewRefContent("/img/yellow.png"))
+				boxSelected.Run();
+				boxSelected.SetPosition(148 98)
+			}
+			:If (intSelectedPos == 4) {
+				txtOptions.SetData("Press Select to choose Blueness")
+				pngDefaultImage.SetData(:NewRefContent("/img/blue.png"))
+				boxSelected.Run();
+				boxSelected.SetPosition(198 98)
+			}
+		)
+	}
+	// activate selection
+	{:Link linkSelectPressed
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		15
+		:LinkEffect (
+			:If (intSelectedPos == 1) {
+				:TransitionTo (("/red.mheg+" 0))
+			}
+			:If (intSelectedPos == 2) {
+				:TransitionTo (("/green.mheg+" 0))
+			}
+			:If (intSelectedPos == 3) {
+				:TransitionTo (("/yellow.mheg+" 0))
+			}
+			:If (intSelectedPos == 4) {
+				:TransitionTo (("/blue.mheg+" 0))
+			}
+		)
+	}
+	
+	// hidden up action
+	{:Link linkUpPress
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		1
+		:LinkEffect (
+			txtTitle.SetData(:IndirectRef constChooseAnOption)
+			txtOptions.SetData("Up, up, and away!")
+			
+			intSelectedPos.SetVariable(0)
+			linkUpdateNav.Activate()
+		)
+	}
+	
+	// random number game
+	{:ResidentPrg mathRandom :InitiallyActive false :name "Rnd" }
+	{:Timer gameTimer }
+	{:BooleanVar residentPrgResult :OrigValue false }
+	{:IntegerVar intRandomNumber :OrigValue 0 }
+	{:OStringVar stringGuessResult :OrigValue "" }
+	{:IntegerVar intGuessResult :OrigValue 0 }
+	{:IntegerVar intGuessCount :OrigValue 0 }
+	{:OStringVar stringGuessCount :OrigValue "" }
+	{:IntegerVar intTimeRemaining :OrigValue 0 }
+	{:OStringVar stringTimeRemaining :OrigValue "" }
+	{:Text txtTimeRemaining
+		:OrigContent ""
+		:OrigBoxSize 190 95
+		:OrigPosition 50 245
+		:HJustification centre
+		:VJustification start
+		:TextWrapping true
+	}
+	
+	{:Link linkDownPress
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		2
+		:LinkEffect (
+			txtOptions.SetData("Guess a 3 digit code!")
+			pngDefaultImage.SetData(:NewRefContent("/img/random.png"))
+			txtTitle.SetData("")
+			txtTitle.SetInteractionStatus(true)
+			
+			intTimeRemaining.SetVariable(20)
+			stringTimeRemaining.SetVariable(:IndirectRef intTimeRemaining)
+			stringTimeRemaining.Append(" seconds left")
+			txtTimeRemaining.SetData(:IndirectRef stringTimeRemaining)
+			:SetTimer(0 gameTimer 1000)
+			
+			:If (intRandomNumber == 0) {
+				mathRandom.Call(residentPrgResult 999 :GInteger :IndirectRef intRandomNumber)
+			}
+			
+			intSelectedPos.SetVariable(0)
+			linkUpdateNav.Activate()
+		)
+	}
+	{:Link linkTextEntry
+		:EventSource 	txtTitle
+		:EventType		InteractionCompleted
+		:LinkEffect (
+			intGuessCount.Add(1)
+			:GetTextData(txtTitle stringGuessResult)
+			intGuessResult.SetVariable(:IndirectRef stringGuessResult)
+			stringGuessCount.SetVariable(:IndirectRef intGuessCount)
+			
+			:If(intGuessResult == :IndirectRef intRandomNumber)
+			{
+				stringGuessResult.Append(" was correct! Took ")
+				stringGuessResult.Append(:IndirectRef stringGuessCount)
+				stringGuessResult.Append(" attempts.")
+				intRandomNumber.SetVariable(0)
+				intGuessCount.SetVariable(0)
+				txtTitle.SetData(:IndirectRef constChooseAnOption)
+			}
+			:Else
+			{
+				:If(intGuessResult < :IndirectRef intRandomNumber) 
+				{
+					stringGuessResult.Append(" was too low! Attempt ")
+					stringGuessResult.Append(:IndirectRef stringGuessCount)
+					txtTitle.SetData("")
+					txtTitle.SetInteractionStatus(true)
+				}
+				:Else
+				{
+					stringGuessResult.Append(" was too high! Attempt ")
+					stringGuessResult.Append(:IndirectRef stringGuessCount)
+					txtTitle.SetData("")
+					txtTitle.SetInteractionStatus(true)
+				}
+			}
+			txtOptions.SetData(:IndirectRef stringGuessResult)
+		)
+	}
+	{:Link linkGameTimerEvent
+		:EventSource 	0
+		:EventType		TimerFired
+		:EventData		gameTimer
+		:LinkEffect (
+			:If (intRandomNumber != 0)
+			{
+				:If (intTimeRemaining > 0) {
+					intTimeRemaining.Subtract(1)
+					stringTimeRemaining.SetVariable(:IndirectRef intTimeRemaining)
+					stringTimeRemaining.Append(" seconds left")
+					txtTimeRemaining.SetData(:IndirectRef stringTimeRemaining)
+					:SetTimer(0 gameTimer 1000)
+				}
+				:Else {
+					txtTitle.SetData("Game over")
+					txtTitle.SetInteractionStatus(false)
+					txtOptions.SetData("You ran out of time, sorry!")
+					intRandomNumber.SetVariable(0)
+					intGuessCount.SetVariable(0)
+					txtTimeRemaining.SetData("")
+				}
+			}
+		)
+	}
+	
+	// and finally
+	{:Link linkQuit
+		:EventSource	0
+		:EventType		UserInput
+		:EventData		16
+		:LinkEffect (
+			:Quit (('a' 0))
+		)
+	}
+)
+:InputEventReg 4
+:SceneCS 720 576
+}
