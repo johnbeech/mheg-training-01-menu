@@ -3,7 +3,9 @@ MHEG Training 01 - Simple Menu
 
 MHEG Plus code using MhegPlus.MhegPlayer for training purposes to create a simple menu and image loader.
 
-Demonstrates
+Purpose
+-------
+This project demonstrates:
 * A basic MHEG application
 * Scene switching
 * Key Events
