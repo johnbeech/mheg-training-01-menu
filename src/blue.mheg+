@@ -1,50 +1,55 @@
 {:Scene("/blue.mheg+" 0)
-:Items (
-	{:Rectangle boxBorder
-		:OrigBoxSize 200 140
-		:OrigPosition 45 45
-		:OrigRefFillColour '=7F=7F=7F=00'
-	}
-	{:EntryField txtTitle
-		:OrigContent "PAGE BLUE"
-		:OrigBoxSize 190 45
-		:OrigPosition 50 50
-		:HJustification centre
-		:VJustification centre
-		:InputType numeric
-	}
-	{:Rectangle boxSelected
-		:OrigBoxSize 44 44
-		:OrigPosition 48 98
-		:OrigLineWidth 2
-		:OrigRefLineColour '=FF=FF=FF=00'
-		:OrigRefFillColour '=00=00=00=FF'
-		:InitiallyActive false
-	}
-	{:Rectangle boxBlue
-		:OrigBoxSize 190 40
-		:OrigPosition 50 100
-		:OrigLineWidth 4
-		:OrigRefLineColour '=00=00=7F=00'
-		:OrigRefFillColour '=00=3F=FF=00'
-	}
-	{:Text txtOptions
-		:OrigContent "Press Back to Return"
-		:OrigBoxSize 190 35
-		:OrigPosition 50 145
-		:HJustification centre
-		:VJustification start
-		:TextWrapping true
-	}
-	{:Link lnkReturnToMain
-		:EventSource	0
-		:EventType		UserInput
-		:EventData		16
-		:LinkEffect (
-			:TransitionTo (("/main.mheg+" 0))
-		)
-	}
-)
-:InputEventReg 4
-:SceneCS 720 576
+	:Items (
+		{:Rectangle boxBorder
+			:OrigBoxSize 200 140
+			:OrigPosition 45 45
+			:OrigRefFillColour '=7F=7F=7F=00'
+		}
+		
+		{:EntryField txtTitle
+			:OrigContent "PAGE BLUE"
+			:OrigBoxSize 190 45
+			:OrigPosition 50 50
+			:HJustification centre
+			:VJustification centre
+			:InputType numeric
+		}
+		
+		{:Rectangle boxSelected
+			:OrigBoxSize 44 44
+			:OrigPosition 48 98
+			:OrigLineWidth 2
+			:OrigRefLineColour '=FF=FF=FF=00'
+			:OrigRefFillColour '=00=00=00=FF'
+			:InitiallyActive false
+		}
+		
+		{:Rectangle boxBlue
+			:OrigBoxSize 190 40
+			:OrigPosition 50 100
+			:OrigLineWidth 4
+			:OrigRefLineColour '=00=00=7F=00'
+			:OrigRefFillColour '=00=3F=FF=00'
+		}
+		
+		{:Text txtOptions
+			:OrigContent "Press Back to Return"
+			:OrigBoxSize 190 35
+			:OrigPosition 50 145
+			:HJustification centre
+			:VJustification start
+			:TextWrapping true
+		}
+		
+		{:Link lnkReturnToMain
+			:EventSource	0
+			:EventType		UserInput
+			:EventData		16
+			:LinkEffect (
+				:TransitionTo (("/main.mheg+" 0))
+			)
+		}
+	)
+	:InputEventReg 4
+	:SceneCS 720 576
 }
